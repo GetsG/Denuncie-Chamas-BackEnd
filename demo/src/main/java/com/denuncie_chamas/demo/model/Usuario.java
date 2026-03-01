@@ -26,12 +26,12 @@ public class Usuario implements UserDetails {
     private Long id_usuario;
 
     private String nome;
-    private Integer telefone;
+    private String telefone;
     private String email;
     private String senha;
     private LocalDate data_cadastro;
 
-    public Usuario(String nome, Integer telefone, String email, String password, LocalDate data){
+    public Usuario(String nome, String telefone, String email, String password, LocalDate data){
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;

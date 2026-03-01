@@ -1,4 +1,4 @@
 package com.denuncie_chamas.demo.model;
 
-public record RegisterDTO(String nome, Integer telefone, String login, String password) {
+public record RegisterDTO(String nome, String telefone, String login, String password) {
 }

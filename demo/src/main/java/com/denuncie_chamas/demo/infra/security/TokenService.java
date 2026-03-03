@@ -23,6 +23,8 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("Denuncie-Chamas")
+                    .withClaim("nome", usuario.getNome())
+                    .withClaim("id", usuario.getId_usuario())
                     .withSubject(usuario.getEmail())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);

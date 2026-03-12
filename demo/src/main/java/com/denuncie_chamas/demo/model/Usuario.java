@@ -23,7 +23,8 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    @Column(name = "id_usuario")
+    private Long id;
 
     private String nome;
     private String telefone;

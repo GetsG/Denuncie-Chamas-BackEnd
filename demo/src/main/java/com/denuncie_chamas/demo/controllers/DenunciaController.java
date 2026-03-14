@@ -1,6 +1,5 @@
 package com.denuncie_chamas.demo.controllers;
 
-import com.denuncie_chamas.demo.model.Denuncia;
 import com.denuncie_chamas.demo.model.DenunciaDTO;
 import com.denuncie_chamas.demo.model.DenunciaResponseDTO;
 import com.denuncie_chamas.demo.services.DenunciaServices;

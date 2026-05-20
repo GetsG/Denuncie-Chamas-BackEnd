@@ -16,31 +16,52 @@ import java.util.stream.Collectors;
 
 @Service
 public class RelatorioServices {
+
     @Autowired
     private DenunciaRepository denunciaRepository;
 
-    public byte[] gerarRelatorio(Long usuarioId) throws Exception {
+    public byte[] gerarRelatorio(Long usuarioId) {
 
-        List<Denuncia> denuncias = denunciaRepository.findByUsuarioId(usuarioId);
+        try {
 
-        // 👇 converte para DTO — resolve o problema dos Enums
-        List<DenunciaRelatorioDTO> dtos = denuncias.stream()
-                .map(DenunciaRelatorioDTO::new)
-                .collect(Collectors.toList());
+            List<Denuncia> denuncias =
+                    denunciaRepository.findByUsuarioId(usuarioId);
 
-        InputStream arquivo = getClass().getResourceAsStream("/relatorios/denuncias.jrxml");
+            System.out.println("Denúncias encontradas: " + denuncias.size());
 
-        JasperReport jasperReport = JasperCompileManager.compileReport(arquivo);
+            List<DenunciaRelatorioDTO> dtos = denuncias.stream()
+                    .map(DenunciaRelatorioDTO::new)
+                    .collect(Collectors.toList());
 
-        // 👇 usa a lista de DTOs
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(dtos);
+            InputStream arquivo =
+                    getClass().getResourceAsStream(
+                            "/relatorios/denuncias.jrxml"
+                    );
 
-        Map<String, Object> parametros = new HashMap<>();
-        parametros.put("titulo", "Relatório de Denúncias");
+            System.out.println("ARQUIVO: " + arquivo);
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource);
+            JasperReport jasperReport =
+                    JasperCompileManager.compileReport(arquivo);
 
-        System.out.println("Denúncias encontradas: " + denuncias.size());
+            JRBeanCollectionDataSource dataSource =
+                    new JRBeanCollectionDataSource(dtos);
 
-        return JasperExportManager.exportReportToPdf(jasperPrint);
-    }}
+            Map<String, Object> parametros = new HashMap<>();
+
+            JasperPrint jasperPrint =
+                    JasperFillManager.fillReport(
+                            jasperReport,
+                            parametros,
+                            dataSource
+                    );
+
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            throw new RuntimeException(e);
+        }
+    }
+}

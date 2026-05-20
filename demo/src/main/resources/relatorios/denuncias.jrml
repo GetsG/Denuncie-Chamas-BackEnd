@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+"http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport
+        name="denuncias"
+        pageWidth="595"
+        pageHeight="842"
+        columnWidth="555"
+        leftMargin="20"
+        rightMargin="20"
+        topMargin="20"
+        bottomMargin="20">
+
+    <!-- Campos -->
+    <field name="id_denuncia" class="java.lang.Long"/>
+    <field name="tipoIncendio" class="java.lang.String"/>
+    <field name="gravidade" class="java.lang.String"/>
+    <field name="latitude" class="java.math.BigDecimal"/>
+    <field name="longitude" class="java.math.BigDecimal"/>
+    <field name="descricao" class="java.lang.String"/>
+    <field name="dataRegistro" class="java.lang.String"/>
+    <field name="status" class="java.lang.String"/>
+
+    <!-- TÍTULO -->
+    <title>
+        <band height="70">
+
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="50"/>
+            </rectangle>
+
+            <staticText>
+                <reportElement x="10" y="10" width="500" height="30"/>
+                <textElement>
+                    <font size="22" isBold="true"/>
+                </textElement>
+                <text><![CDATA[🔥 Relatório de Denúncias - Denuncie Chamas]]></text>
+            </staticText>
+
+        </band>
+    </title>
+
+    <!-- CABEÇALHO -->
+    <pageHeader>
+        <band height="70">
+
+            <staticText>
+                <reportElement x="0" y="10" width="150" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Relatório Gerado]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="160" y="10" width="200" height="20"/>
+                <textFieldExpression><![CDATA[
+                    new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm")
+                    .format(new java.util.Date())
+                ]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </pageHeader>
+
+    <!-- DETALHES -->
+    <detail>
+        <band height="220">
+
+            <rectangle>
+                <reportElement x="0" y="0" width="555" height="210"/>
+            </rectangle>
+
+            <!-- Gravidade -->
+            <textField>
+                <reportElement x="10" y="10" width="120" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Gravidade: " + $F{gravidade}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- Status -->
+            <textField>
+                <reportElement x="150" y="10" width="120" height="20"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[
+                    "Status: " + $F{status}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- ID -->
+            <textField>
+                <reportElement x="10" y="40" width="300" height="20"/>
+                <textFieldExpression><![CDATA[
+                    "ID: " + $F{id_denuncia}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- Categoria -->
+            <textField>
+                <reportElement x="10" y="65" width="300" height="20"/>
+                <textFieldExpression><![CDATA[
+                    "Categoria: " + $F{tipoIncendio}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- Coordenadas -->
+            <textField>
+                <reportElement x="10" y="90" width="500" height="20"/>
+                <textFieldExpression><![CDATA[
+                    "Coordenadas: "
+                    + $F{latitude}
+                    + ", "
+                    + $F{longitude}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- Descrição -->
+            <textField isStretchWithOverflow="true">
+                <reportElement x="10" y="115" width="520" height="40"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[
+                    "Descrição: " + $F{descricao}
+                ]]></textFieldExpression>
+            </textField>
+
+            <!-- Data -->
+            <textField>
+                <reportElement x="10" y="170" width="300" height="20"/>
+                <textFieldExpression><![CDATA[
+                    "Data Registro: " + $F{dataRegistro}
+                ]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+</jasperReport>

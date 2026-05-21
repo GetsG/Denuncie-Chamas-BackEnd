@@ -1,5 +1,7 @@
 package com.denuncie_chamas.demo.services;
 
+import com.denuncie_chamas.demo.exceptions.AcessoNegadoException;
+import com.denuncie_chamas.demo.exceptions.DenunciaNotFoundException;
 import com.denuncie_chamas.demo.model.Denuncia;
 import com.denuncie_chamas.demo.model.DenunciaDTO;
 import com.denuncie_chamas.demo.model.DenunciaResponseDTO;
@@ -80,6 +82,7 @@ public class DenunciaServices {
 
         return denuncias.stream()
                 .map(denuncia -> new DenunciaResponseDTO(
+                        denuncia.getId_denuncia(),
                         denuncia.getTipoIncendio(),
                         denuncia.getGravidade(),
                         denuncia.getLatitude(),
@@ -90,5 +93,21 @@ public class DenunciaServices {
                         denuncia.getStatus()
                 ))
                 .toList();
+    }
+
+    public void deletarDenuncia(Long id) {
+        // Pega o usuário autenticado pelo Spring Security
+        String emailUsuario = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        Denuncia denuncia = repository.findById(id)
+                .orElseThrow(() -> new DenunciaNotFoundException(id));
+
+        if (!denuncia.getUsuario().getEmail().equals(emailUsuario)) {
+            throw new AcessoNegadoException("Você não tem permissão para remover esta denúncia.");
+        }
+
+        repository.delete(denuncia);
     }
 }

@@ -27,4 +27,10 @@ public class DenunciaController {
     public ResponseEntity<List<DenunciaResponseDTO>> getMyReports(){
         return ResponseEntity.ok(services.findMyDenuncias());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        services.deletarDenuncia(id);
+        return ResponseEntity.noContent().build();
+    }
 }

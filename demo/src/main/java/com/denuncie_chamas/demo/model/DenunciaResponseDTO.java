@@ -6,7 +6,8 @@ import com.denuncie_chamas.demo.model.Enums.TipoIncendioEnum;
 
 import java.math.BigDecimal;
 
-public record DenunciaResponseDTO(TipoIncendioEnum tipoIncendio,
+public record DenunciaResponseDTO(Long id_denuncia,
+                                  TipoIncendioEnum tipoIncendio,
                                   GravidadeEnum gravidade,
                                   BigDecimal latitude,
                                   BigDecimal longitude,
